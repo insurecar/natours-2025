@@ -67,6 +67,31 @@ app.patch('/api/v1/tours/:id', (req, res) => {
   });
 });
 
+app.delete('/api/v1/tours/:id', (req, res) => {
+  const tour = tours.find((tour) => +tour.id === +req.params.id);
+  console.log(tour);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Not found',
+    });
+  }
+
+  const updatedTours = tours.filter((item) => +item.id !== tour.id);
+
+  fs.writeFile(
+    `${__dirname}/dev-data/data/tours-simple.json`,
+    JSON.stringify(updatedTours),
+    (err) => {
+      res.status(201).json({
+        status: 'success',
+        data: null,
+      });
+    }
+  );
+});
+
 const port = 8000;
 
 app.listen(port, () => {
