@@ -40,6 +40,24 @@ app.post('/api/v1/tours', (req, res) => {
   );
 });
 
+app.get(`/api/v1/tours/:id`, (req, res) => {
+  const tour = tours.find((tour) => +tour.id === +req.params.id);
+
+  if (Object.keys.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: `Invalid id ${req.params.id}`,
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour,
+    },
+  });
+});
+
 const port = 8000;
 
 app.listen(port, () => {
