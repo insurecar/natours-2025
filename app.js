@@ -1,20 +1,23 @@
 const express = require('express');
+const fs = require('fs');
 
 const app = express();
 
-const port = 8000;
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
+);
 
-app.get('/', (req, res) => {
+app.get('/api/v1/tours', (req, res) => {
   res.status(200).json({
-    message: 'shdbf',
+    status: 'success',
+    results: tours.length,
+    data: {
+      tours,
+    },
   });
 });
 
-app.post('/', (req, res) => {
-  res.status(201).json({
-    message: 'ok',
-  });
-});
+const port = 8000;
 
 app.listen(port, () => {
   console.log(`App running on port ${port}...`);
