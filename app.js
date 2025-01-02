@@ -105,14 +105,12 @@ const deleteTour = (req, res) => {
 };
 
 //3) ROUTES
+const tourRouter = express.Router(); //need to specify router
+app.use('/api/v1/tours', tourRouter);
 
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
+tourRouter.route('/').get(getAllTours).post(createTour);
 
-app
-  .route('/api/v1/tours/:id')
-  .get(getTour)
-  .patch(updatedTour)
-  .delete(deleteTour);
+tourRouter.route('/:id').get(getTour).patch(updatedTour).delete(deleteTour);
 
 //4) Started SERVER
 const port = 8000;
