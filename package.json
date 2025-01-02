@@ -4,7 +4,8 @@
   "description": "Node js",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js",
+    "clean": "npx kill-port 8000"
   },
   "author": "Rostyslav Shyian",
   "license": "ISC",
