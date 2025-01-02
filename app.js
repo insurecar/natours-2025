@@ -1,7 +1,11 @@
 const express = require('express');
 const fs = require('fs');
+const morgan = require('morgan'); // need for using middleware to see the time in terminal
 
 const app = express();
+
+//1) MIDDDLEWARES
+app.use(morgan('dev'));
 app.use(express.json()); //middleware to get data from client. need it for post method
 
 const tours = JSON.parse(
@@ -12,6 +16,8 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
+
+//2) ROUTE HANDLERS
 
 const getAllTours = (req, res) => {
   res.status(200).json({
@@ -98,6 +104,8 @@ const deleteTour = (req, res) => {
   );
 };
 
+//3) ROUTES
+
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
 
 app
@@ -105,6 +113,8 @@ app
   .get(getTour)
   .patch(updatedTour)
   .delete(deleteTour);
+
+//4) Started SERVER
 const port = 8000;
 
 app.listen(port, () => {
