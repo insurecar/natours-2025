@@ -8,6 +8,7 @@ const app = express();
 //1) MIDDDLEWARES
 app.use(morgan('dev'));
 app.use(express.json()); //middleware to get data from client. need it for post method
+app.use(express.static(`${__dirname}/public`)); //need for opening file from public folder
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
