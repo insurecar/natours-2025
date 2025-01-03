@@ -1,0 +1,229 @@
+{
+    "locations": [
+        "Kharkiv",
+        "Chennai",
+        "Istanbul",
+        "Krakow",
+        "Baku",
+        "Austin",
+        "Hyderabad",
+        "Kyiv",
+        "Yerevan",
+        "Lviv",
+        "Lisbon",
+        "Buenos Aires",
+        "Wroclaw",
+        "Bangalore",
+        "Gdansk",
+        "Chisinau",
+        "Belgrade",
+        "India Remote",
+        "US Remote",
+        "London",
+        "San Ramon",
+        "Dallas",
+        "Tampa",
+        "Portland",
+        "Kingston",
+        "Guadalajara",
+        "Phoenix",
+        "Romania Remote",
+        "Seattle",
+        "Warsaw",
+        "Atlanta",
+        "Dnipro",
+        "Novi Sad",
+        "Bucharest",
+        "Amsterdam",
+        "Armenia Remote",
+        "Central Europe Remote",
+        "Turkey Remote",
+        "Asia Remote",
+        "Canada Remote",
+        "Odesa",
+        "Vinnytsia",
+        "New York City",
+        "West Europe Remote",
+        "Iasi",
+        "Malaga",
+        "LATAM Remote",
+        "Cluj-Napoca",
+        "Zug",
+        "East Europe Remote",
+        "Nis",
+        "Timisoara"
+    ],
+    "countries": [
+        {
+            "country": "Ukraine",
+            "cities": [
+                "Kharkiv",
+                "Kyiv",
+                "Lviv",
+                "Dnipro",
+                "Odesa",
+                "Vinnytsia"
+            ]
+        },
+        {
+            "country": "India",
+            "cities": [
+                "Chennai",
+                "Hyderabad",
+                "Bangalore"
+            ]
+        },
+        {
+            "country": "Turkey",
+            "cities": [
+                "Istanbul"
+            ]
+        },
+        {
+            "country": "Poland",
+            "cities": [
+                "Krakow",
+                "Wroclaw",
+                "Gdansk",
+                "Warsaw"
+            ]
+        },
+        {
+            "country": "Azerbaijan",
+            "cities": [
+                "Baku"
+            ]
+        },
+        {
+            "country": "USA",
+            "cities": [
+                "Austin",
+                "San Ramon",
+                "Dallas",
+                "Tampa",
+                "Portland",
+                "Phoenix",
+                "Seattle",
+                "Atlanta",
+                "New York City"
+            ]
+        },
+        {
+            "country": "Armenia",
+            "cities": [
+                "Yerevan"
+            ]
+        },
+        {
+            "country": "Portugal",
+            "cities": [
+                "Lisbon"
+            ]
+        },
+        {
+            "country": "Argentina",
+            "cities": [
+                "Buenos Aires"
+            ]
+        },
+        {
+            "country": "Moldova",
+            "cities": [
+                "Chisinau"
+            ]
+        },
+        {
+            "country": "Serbia",
+            "cities": [
+                "Belgrade",
+                "Novi Sad",
+                "Nis"
+            ]
+        },
+        {
+            "country": "UK",
+            "cities": [
+                "London"
+            ]
+        },
+        {
+            "country": "Jamaica",
+            "cities": [
+                "Kingston"
+            ]
+        },
+        {
+            "country": "Mexico",
+            "cities": [
+                "Guadalajara"
+            ]
+        },
+        {
+            "country": "Romania",
+            "cities": [
+                "Bucharest",
+                "Iasi",
+                "Cluj-Napoca",
+                "Timisoara"
+            ]
+        },
+        {
+            "country": "Netherlands",
+            "cities": [
+                "Amsterdam"
+            ]
+        },
+        {
+            "country": "Spain",
+            "cities": [
+                "Malaga"
+            ]
+        },
+        {
+            "country": "Switzerland",
+            "cities": [
+                "Zug"
+            ]
+        },
+        {
+            "country": "India Remote",
+            "cities": []
+        },
+        {
+            "country": "US Remote",
+            "cities": []
+        },
+        {
+            "country": "Armenia Remote",
+            "cities": []
+        },
+        {
+            "country": "Central Europe Remote",
+            "cities": []
+        },
+        {
+            "country": "Turkey Remote",
+            "cities": []
+        },
+        {
+            "country": "Asia Remote",
+            "cities": []
+        },
+        {
+            "country": "Canada Remote",
+            "cities": []
+        },
+        {
+            "country": "West Europe Remote",
+            "cities": []
+        },
+        {
+            "country": "LATAM Remote",
+            "cities": []
+        },
+        {
+            "country": "East Europe Remote",
+            "cities": []
+        }
+    ]
+}

@@ -11,7 +11,7 @@ const {
 
 const router = express.Router(); //need to specify router
 
-router.param('id', checkID);
+router.param('id', checkID); //check specific param
 
 router.route('/').get(getAllTours).post(checkBody, createTour);
 router.route('/:id').get(getTour).patch(updatedTour).delete(deleteTour);
