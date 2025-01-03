@@ -7,7 +7,7 @@ const app = express();
 
 //1) MIDDDLEWARES
 if (process.env.NODE_ENV === 'development') {
-  console.log('☠️☠️☠️☠️☠️☠️☠️');
+  console.log('🤖🤖🤖🤖🤖🤖');
 
   app.use(morgan('dev'));
 }

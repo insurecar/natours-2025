@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
     "clean": "npx kill-port 8000"
   },
   "author": "Rostyslav Shyian",
