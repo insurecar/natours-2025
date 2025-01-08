@@ -20,7 +20,7 @@ const tourSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A tour must have a name'],
-    uniq: [true, 'Duplicated name'],
+    unique: [true, 'Duplicated name'],
   },
   rating: {
     type: Number,
@@ -32,7 +32,20 @@ const tourSchema = new mongoose.Schema({
   },
 });
 
-const Tour = mongoose.model('Tout', tourSchema);
+const Tour = mongoose.model('Tours', tourSchema);
+
+const testTour = new Tour({
+  name: 'The forest hicker tester2',
+  rating: 4.7,
+  price: 497,
+});
+
+testTour
+  .save()
+  .then((doc) => {
+    console.log('🌤️🌤️🌤️', doc);
+  })
+  .catch((err) => console.log('err', err));
 
 app.listen(process.env.PORT, () => {
   console.log(`App running on port ${process.env.PORT}...`);
