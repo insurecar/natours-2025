@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Tour = require('./../models/tourModel');
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
@@ -14,19 +15,19 @@ exports.checkBody = (req, res, next) => {
   next();
 };
 
-exports.checkID = (req, res, next, id) => {
-  const tour = tours.find((item) => +item.id === +id);
+// exports.checkID = (req, res, next, id) => {
+//   const tour = tours.find((item) => +item.id === +id);
 
-  if (!tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Not found',
-    });
-  }
+//   if (!tour) {
+//     return res.status(404).json({
+//       status: 'fail',
+//       message: 'Not found',
+//     });
+//   }
 
-  req.tour = tour;
-  next();
-};
+//   req.tour = tour;
+//   next();
+// };
 
 exports.getAllTours = (req, res) => {
   res.status(200).json({
