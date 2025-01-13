@@ -2,6 +2,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 require('dotenv').config({ path: './config.env' });
 const Tour = require('./../../models/tourModel');
+const GdUserModel = require('./../../models/gdUserModel');
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -22,12 +23,14 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
 );
 
+console.log('L___E___N___G___T___H', tours.length);
+
 const gdUsers = JSON.parse(
   fs.readFileSync(`${__dirname}/gdUsers.json`, 'utf-8')
 );
 
 //IMPORT DATA INTO DB
-const importData = async () => {
+const importDataTours = async () => {
   try {
     await Tour.create(tours);
     console.log('Data successfully loaded 💚💚💚💚💚');
@@ -38,7 +41,7 @@ const importData = async () => {
 };
 
 //DELETE ALL DATA FROM DB
-const deleteData = async () => {
+const deleteDataTours = async () => {
   try {
     await Tour.deleteMany();
     console.log('Data successfully loaded 💚💚💚💚💚');
@@ -48,10 +51,37 @@ const deleteData = async () => {
   }
 };
 
-if (process.argv[2] === '--import') {
-  importData();
-} else if (process.argv[2] === '--delete') {
-  deleteData();
-}
+const importDataGdUsers = async () => {
+  try {
+    await GdUserModel.create(gdUsers);
+    console.log('Data successfully loaded 💚💚💚💚💚');
+    process.exit();
+  } catch (e) {
+    console.log('Something went wrong... 🍓🍓🍓🍓🍓');
+  }
+};
 
-console.log(process.argv);
+const deleteDataGdUsers = async () => {
+  try {
+    await GdUserModel.deleteMany();
+    console.log('Data successfully loaded 💚💚💚💚💚');
+    process.exit();
+  } catch (e) {
+    console.log('Something went wrong... 🍓🍓🍓🍓🍓');
+  }
+};
+
+if (process.argv[2] === '--import') {
+  if (process.argv[3] === '--tours') {
+    importDataTours();
+  } else if (process.argv[3] === '--gdusers') {
+    importDataGdUsers();
+  }
+} else if (process.argv[2] === '--delete') {
+  if (process.argv[3] === '--tours') {
+    deleteDataTours();
+  } else if (process.argv[3] === '--gdusers') {
+    console.log('WORKING   😍😍😍😍😍');
+    deleteDataGdUsers();
+  }
+}
