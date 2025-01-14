@@ -1,18 +1,26 @@
 const fs = require('fs');
-
-const gdUsers = JSON.parse(
-  fs.readFileSync(`${__dirname}/../dev-data/data/gdUsers.json`)
-);
+const GdUserModel = require('./../models/gdUserModel');
 
 const location = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/allGdLocation.json`)
 );
 
-exports.getAllGdUsers = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    gdUsers,
-  });
+exports.getAllGdUsers = async (req, res) => {
+  try {
+    const employes = await GdUserModel.find();
+    res.status(200).json({
+      status: 'success',
+      length: employes.length,
+      data: {
+        employes,
+      },
+    });
+  } catch (e) {
+    res.status(200).json({
+      status: 'success',
+      message: err,
+    });
+  }
 };
 
 exports.getAllLocation = (req, res) => {

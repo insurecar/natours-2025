@@ -7,8 +7,10 @@
     "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "clean": "npx kill-port 8000",
-    "delete-tours": "node dev-data/data/import-dev-data.js --delete",
-    "import-tours": "node dev-data/data/import-dev-data.js --import"
+    "delete-tours": "node dev-data/data/import-dev-data.js --delete --tours",
+    "delete-gdusers": "node dev-data/data/import-dev-data.js --delete --gdusers",
+    "import-tours": "node dev-data/data/import-dev-data.js --import --tours",
+    "import-gdusers": "node dev-data/data/import-dev-data.js --import --gdusers"
   },
   "author": "Rostyslav Shyian",
   "license": "ISC",

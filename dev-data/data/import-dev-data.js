@@ -23,8 +23,6 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
 );
 
-console.log('L___E___N___G___T___H', tours.length);
-
 const gdUsers = JSON.parse(
   fs.readFileSync(`${__dirname}/gdUsers.json`, 'utf-8')
 );
@@ -64,11 +62,8 @@ const importDataGdUsers = async () => {
 const deleteDataGdUsers = async () => {
   try {
     await GdUserModel.deleteMany();
-    console.log('Data successfully loaded 💚💚💚💚💚');
     process.exit();
-  } catch (e) {
-    console.log('Something went wrong... 🍓🍓🍓🍓🍓');
-  }
+  } catch (e) {}
 };
 
 if (process.argv[2] === '--import') {
@@ -81,7 +76,6 @@ if (process.argv[2] === '--import') {
   if (process.argv[3] === '--tours') {
     deleteDataTours();
   } else if (process.argv[3] === '--gdusers') {
-    console.log('WORKING   😍😍😍😍😍');
     deleteDataGdUsers();
   }
 }
