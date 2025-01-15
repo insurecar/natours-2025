@@ -38,6 +38,7 @@ const tourSchema = new mongoose.Schema({
   description: {
     type: String,
     trim: true,
+    select: false, //this field will not be sent to the client
   },
   imageCover: {
     type: String,
