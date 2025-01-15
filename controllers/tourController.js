@@ -27,11 +27,22 @@ exports.checkBody = (req, res, next) => {
 
 exports.getAllTours = async (req, res) => {
   try {
+    //1) Filtering queries
     const queryObj = structuredClone(req.query);
     const excludedFields = ['page', 'sort', 'limit', 'fields']; //excluded fields for queries
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    const tours = await Tour.find(queryObj);
+    //2) Advanced filtering
+    const queryStr = JSON.stringify(queryObj);
+    const updatedQuery = JSON.parse(
+      queryStr.replace(/\b(gte|gt|lte|lt)\b/g, '$$$1')
+    );
+
+    //{difficulty: "easy", "duration": {$gte: 5} }
+    //{difficulty: "easy", "duration": {gte: 5} }
+    //gte, gt, lte, lt
+
+    const tours = await Tour.find(updatedQuery);
 
     // const tours = await Tour.find()
     //   .where('duration')
