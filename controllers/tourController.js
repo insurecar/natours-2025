@@ -27,28 +27,27 @@ exports.checkBody = (req, res, next) => {
 
 exports.getAllTours = async (req, res) => {
   try {
-    //1) Filtering queries
-    const queryObj = structuredClone(req.query);
+    //1a) Filtering queries
+    const queryObj = { ...req.query };
     const excludedFields = ['page', 'sort', 'limit', 'fields']; //excluded fields for queries
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    //2) Advanced filtering
-    const queryStr = JSON.stringify(queryObj);
-    const updatedQuery = JSON.parse(
-      queryStr.replace(/\b(gte|gt|lte|lt)\b/g, '$$$1')
-    );
+    //2b) Advanced filtering
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, '$$$1');
+
+    let query = Tour.find(JSON.parse(queryStr));
 
     //{difficulty: "easy", "duration": {$gte: 5} }
     //{difficulty: "easy", "duration": {gte: 5} }
     //gte, gt, lte, lt
 
-    const tours = await Tour.find(updatedQuery);
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query.sort(sortBy);
+    }
 
-    // const tours = await Tour.find()
-    //   .where('duration')
-    //   .equals('5')
-    //   .where('difficulty')
-    //   .equals('easy');
+    const tours = await await query;
 
     res.status(200).json({
       status: 'success',
