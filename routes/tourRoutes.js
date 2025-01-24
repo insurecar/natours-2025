@@ -8,11 +8,14 @@ const {
   checkID,
   checkBody,
   aliasTopTours,
+  getTourStats,
 } = require('../controllers/tourController');
 
 const router = express.Router(); //need to specify router
 
 // router.param('id', checkID); //check specific param
+
+router.route('/tour-stats').get(getTourStats);
 
 router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 
