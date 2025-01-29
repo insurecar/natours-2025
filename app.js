@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 //3) ROUTES
 app.use('/api/v1/tours', tourRouter);
-app.use('/api/v1/gd-users', gdUserRouter);
+app.use('/api/v1/employes', gdUserRouter);
 
 //4) Started SERVER
 module.exports = app;
