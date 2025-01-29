@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan'); // need for using middleware to see the time in terminal
 const tourRouter = require('./routes/tourRoutes');
 const gdUserRouter = require('./routes/gdUserRoutes');
+const e = require('express');
 
 const app = express();
 
@@ -19,19 +20,30 @@ app.use((req, res, next) => {
   next();
 });
 
-//2) ROUTE HANDLERS
-
 //3) ROUTES
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/employes', gdUserRouter);
 
 app.all('*', (req, res, next) => {
-  res.status(404).json({
-    status: 'fail',
-    message: `Can't find ${req.originalUrl}`,
-  });
+  // res.status(404).json({
+  //   status: 'fail',
+  //   message: `Can't find ${req.originalUrl}`,
+  // });
 
-  next();
+  const err = new Error(`Can't find ${req.originalUrl}`);
+  err.status = 'fail';
+  err.statusCode = 404;
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
+
+  res.status(err.statusCode).json({
+    status: err.status,
+    message: err.message,
+  });
 });
 
 //4) Started SERVER
