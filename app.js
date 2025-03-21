@@ -2,7 +2,6 @@ const express = require('express');
 const morgan = require('morgan'); // need for using middleware to see the time in terminal
 const tourRouter = require('./routes/tourRoutes');
 const gdUserRouter = require('./routes/gdUserRoutes');
-const e = require('express');
 
 const app = express();
 
