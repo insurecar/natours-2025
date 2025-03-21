@@ -1,6 +1,8 @@
 const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
+const mongoose = require('mongoose');
+const AppError = require('./../utils/appError');
 
 exports.checkBody = (req, res, next) => {
   if (!req.body.name || !req.body.price) {
@@ -12,18 +14,12 @@ exports.checkBody = (req, res, next) => {
   next();
 };
 
-//   const tour = tours.find((item) => +item.id === +id);
-
-//   if (!tour) {
-//     return res.status(404).json({
-//       status: 'fail',
-//       message: 'Not found',
-//     });
-//   }
-
-//   req.tour = tour;
-//   next();
-// };
+exports.isIDValid = (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return next(new AppError('Invalid Tour ID format', 400));
+  }
+  next();
+};
 
 exports.aliasTopTours = async (req, res, next) => {
   req.query.limit = '5';
@@ -53,6 +49,11 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
 exports.getTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.id);
+
+  if (!tour) {
+    return next(new AppError('Tour not found', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -76,6 +77,11 @@ exports.updatedTour = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
+
+  if (!tour) {
+    return next(new AppError('Tour not found', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {

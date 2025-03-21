@@ -24,11 +24,6 @@ app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/employes', gdUserRouter);
 
 app.all('*', (req, res, next) => {
-  // res.status(404).json({
-  //   status: 'fail',
-  //   message: `Can't find ${req.originalUrl}`,
-  // });
-
   const err = new Error(`Can't find ${req.originalUrl}`);
   err.status = 'fail';
   err.statusCode = 404;
