@@ -5,16 +5,16 @@ const {
   getTour,
   updatedTour,
   deleteTour,
-  checkID,
   checkBody,
   aliasTopTours,
   getTourStats,
   getMonthlyPlan,
+  isIDValid,
 } = require('../controllers/tourController');
 
 const router = express.Router(); //need to specify router
 
-// router.param('id', checkID); //check specific param
+router.param('id', isIDValid);
 
 router.route('/tour-stats').get(getTourStats);
 router.route('/monthly-plan/:year').get(getMonthlyPlan);

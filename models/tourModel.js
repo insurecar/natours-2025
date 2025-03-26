@@ -10,7 +10,7 @@ const tourSchema = new mongoose.Schema(
       unique: [true, 'Duplicated name'],
       trim: true,
       maxlength: [40, 'A tour name must have less or equal 40 charactesr'],
-      minlength: [40, 'A tour name must have morel 10 charactesr'],
+      minlength: [10, 'A tour name must have morel 10 charactesr'],
       // validate: [validator.isAlpha, 'Tour name must onlu contain characters'],
     },
     slug: String,
@@ -26,7 +26,7 @@ const tourSchema = new mongoose.Schema(
       type: String,
       required: [true, 'A Tour should have a difficulty'],
       enum: {
-        values: ['easy ', 'medium', 'difficult'],
+        values: ['easy', 'medium', 'difficult'],
         message: 'Difficulty is either: easy, medium or difficult',
       },
     },
@@ -95,16 +95,6 @@ tourSchema.pre('save', function (next) {
   next();
 });
 
-// tourSchema.pre('save', function (next) {
-//   console.log('Will save documetn');
-//   next();
-// });
-
-// tourSchema.post('save', function (doc, next) {
-//   console.log(doc);
-//   next();
-// });
-
 //QUERY MIDDLEWARE
 tourSchema.pre(/^find/, function (next) {
   //allows us to exclude these tour
@@ -115,23 +105,6 @@ tourSchema.pre(/^find/, function (next) {
 tourSchema.post(/^find/, function (docs, next) {
   next();
 });
-// tourSchema.pre('findOne', function (next) {
-//   this.find({ secretTour: { $ne: true } });
-//   next();
-// });
 
 const Tour = mongoose.model('Tours', tourSchema);
 module.exports = Tour;
-
-// const testTour = new Tour({
-//     name: 'The forest hicker tester2',
-//     rating: 4.7,
-//     price: 497,
-//   });
-
-//   testTour
-//     .save()
-//     .then((doc) => {
-//       console.log('🌤️🌤️🌤️', doc);
-//     })
-//     .catch((err) => console.log('err', err));
