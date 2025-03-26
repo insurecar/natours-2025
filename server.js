@@ -13,9 +13,17 @@ mongoose
     useCreateIndex: true,
     useFindAndModify: false,
   })
-  .then(() => console.log('DB connection successful! 🪿🪿🪿'))
-  .catch((err) => console.log('💥💥💥💥', err));
+  .then(() => console.log('DB connection successful! 🪿🪿🪿'));
 
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log(`App running on port ${process.env.PORT}...`);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.log(err.name, err.message);
+
+  console.log('UNHANDLED REJECTION! 💥💥💥 ');
+  server.close(() => {
+    process.exit(1);
+  });
 });
