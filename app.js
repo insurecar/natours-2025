@@ -19,6 +19,7 @@ app.use(express.static(`${__dirname}/public`)); //need for opening file from pub
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
+  console.log(req.headers);
   next();
 });
 

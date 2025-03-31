@@ -55,3 +55,27 @@ exports.login = catchAsync(async (req, res, next) => {
     token,
   });
 });
+
+exports.protect = catchAsync(async (req, res, next) => {
+  //1 Getting token and check of it's exists
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Baerer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+    console.log('T__O__K__E__N', token);
+  }
+
+  if (!token) {
+    return next(
+      new AppError('Ypu are not logged in! Please log in to get access', 401)
+    );
+  }
+  //2 Verification token
+
+  //3 Check if user still exists
+
+  //4 Check if user changed password after JWT was issued
+  next();
+});
