@@ -78,16 +78,16 @@ exports.protect = catchAsync(async (req, res, next) => {
   // console.log('D__E__C__O__D__E__D', decoded);
 
   //3 Check if user still exists
-  const freshUser = await User.findById(decoded.id);
+  const currentUser = await User.findById(decoded.id);
 
-  if (!freshUser) {
+  if (!currentUser) {
     return next(
       new AppError('The user belonging to this token does no longer exist', 401)
     );
   }
   //4 Check if user changed password after JWT was issued
 
-  if (freshUser.changedPasswordAfter(decoded.iat)) {
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
     return new AppError(
       'User recently changed password! Please, log in again',
       401
@@ -96,6 +96,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // GRAN ACCCESS to protected route
 
-  req.user = freshUser;
+  req.user = currentUser;
   next();
 });
