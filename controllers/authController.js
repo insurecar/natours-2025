@@ -22,6 +22,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
+    role: req.body.role,
   });
 
   const token = signToken(newUser._id);
@@ -45,6 +46,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   //2) Check if user exist and password is correct
   const user = await User.findOne({ email }).select('+password');
+  console.log('M___Y___U___S___E___R_', user);
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
@@ -96,6 +98,22 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // GRAN ACCCESS to protected route
 
+  console.log('C__U__R', currentUser);
+
   req.user = currentUser;
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    //roles ['admin', 'lead-guide'] role ='user'
+    console.log('+++++++++++++++++', roles);
+
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perfomrm this action', 403)
+      );
+    }
+    next();
+  };
+};
