@@ -46,7 +46,6 @@ exports.login = catchAsync(async (req, res, next) => {
 
   //2) Check if user exist and password is correct
   const user = await User.findOne({ email }).select('+password');
-  console.log('M___Y___U___S___E___R_', user);
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
@@ -77,7 +76,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   //2 Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  // console.log('D__E__C__O__D__E__D', decoded);
 
   //3 Check if user still exists
   const currentUser = await User.findById(decoded.id);
@@ -98,8 +96,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // GRAN ACCCESS to protected route
 
-  console.log('C__U__R', currentUser);
-
   req.user = currentUser;
   next();
 });
@@ -107,7 +103,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     //roles ['admin', 'lead-guide'] role ='user'
-    console.log('+++++++++++++++++', roles);
 
     if (!roles.includes(req.user.role)) {
       return next(
@@ -117,3 +112,18 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  //1) Get user based on posted email
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError('There is no user with email address', 404));
+  }
+  //2) Generate the random token
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  //3) Send it to user's email
+});
+
+exports.resetPassword = (req, res, next) => {};
