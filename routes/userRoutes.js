@@ -8,7 +8,7 @@ const {
   updatePassword,
   protect,
 } = require('./../controllers/authController');
-const { getAllUsers } = require('./../controllers/userController');
+const { getAllUsers, updateMe } = require('./../controllers/userController');
 
 router.post('/signup', signup);
 router.post('/login', login);
@@ -18,6 +18,7 @@ router.patch('/resetPassword/:token', resetPassword);
 
 router.patch('/updateMyPassword', protect, updatePassword);
 
+router.patch('/updateMe', protect, updateMe);
 router.get('/', getAllUsers);
 
 module.exports = router;
