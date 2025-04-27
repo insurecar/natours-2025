@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan'); // need for using middleware to see the time in terminal
+const rateLimit = require('express-rate-limit'); // for limiting the same request when you login
 const tourRouter = require('./routes/tourRoutes');
 const gdUserRouter = require('./routes/gdUserRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -8,12 +9,20 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
-//1) MIDDDLEWARES
+//1) MIDDLEWARES
 if (process.env.NODE_ENV === 'development') {
   console.log('🤖🤖🤖🤖🤖🤖');
 
   app.use(morgan('dev'));
 }
+
+const limiter = rateLimit({
+  max: 100, //it allows 100 request from the same ip
+  windowMs: 50 * 60 * 1000, // per one hour
+  message: 'Too many request from this IP, please, try again in one hour!',
+});
+app.use('/api', limiter); // it will affect only on routes which we specified
+
 app.use(express.json()); //middleware to get data from client. need it for post method
 app.use(express.static(`${__dirname}/public`)); //need for opening file from public folder
 

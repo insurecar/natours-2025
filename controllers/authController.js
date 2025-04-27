@@ -34,7 +34,7 @@ const createAndSendToken = (user, statusCode, res) => {
 
   res.status(statusCode).json({
     status: 'success',
-    token,
+    // token,
     data: { user },
   });
 };
@@ -73,43 +73,56 @@ exports.login = catchAsync(async (req, res, next) => {
   createAndSendToken(user, 200, res);
 });
 
+exports.logout = catchAsync(async (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000), // cookie will be deleted in 10 sec
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Logged out successfully',
+  });
+});
+
 exports.protect = catchAsync(async (req, res, next) => {
-  //1 Getting token and check of it's exists
+  // 1) Getting token and check if it's there
   let token;
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
     return next(
-      new AppError('Ypu are not logged in! Please log in to get access', 401)
+      new AppError('You are not logged in! Please log in to get access', 401)
     );
   }
-  //2 Verification token
+
+  // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-  //3 Check if user still exists
+  // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
-
   if (!currentUser) {
     return next(
-      new AppError('The user belonging to this token does no longer exist', 401)
+      new AppError('The user belonging to this token no longer exists.', 401)
     );
   }
-  //4 Check if user changed password after JWT was issued
 
+  // 4) Check if user changed password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
-    return new AppError(
-      'User recently changed password! Please, log in again',
-      401
+    return next(
+      new AppError('User recently changed password! Please log in again.', 401)
     );
   }
 
-  // GRAN ACCCESS to protected route
-
+  // 5) Grant access to protected route
   req.user = currentUser;
   next();
 });
