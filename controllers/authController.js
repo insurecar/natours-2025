@@ -19,6 +19,19 @@ const signToken = (id) =>
 
 const createAndSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
+
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+  res.cookie('jwt', token, cookieOptions);
+  //Remove password from response when we create new user
+  user.password = undefined;
+
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -41,6 +54,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log('IP________', req.ip);
 
   //1) Check if email and password exist
   if (!email || !password) {
